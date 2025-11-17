@@ -1,0 +1,29 @@
+{
+  "errorMessage":{
+    "prefix":"errbody",
+    "body":[
+      "{",
+        "\t\"error:\"{",
+          "\t\t\"message\":\"$1\"",
+          "\t\t\"code\":$2",
+        "\t}",
+      "}"
+    ]
+  },
+  "multilineDbExecute":{
+    "prefix":"mdbx",
+    "body":[
+      "db.execute(",
+      " ''' ",
+      "\t $1",
+      " ''' ",
+      ")"
+    ]
+  },
+  "mjax":{
+  	"prefix":"mjax",
+  	"body":[
+  		"\" \\\\\\\\[ $1 \\\\\\\\] \""
+  	]
+  }
+}

@@ -1,0 +1,67 @@
+{
+	"ml-comment": {
+		"prefix": "mc",
+		"body": [
+			"/*",
+			"\t*$1",
+			"*/"
+		]
+	},
+	"remove":{
+		"prefix":"rm",
+		"body":[
+			"remove()"
+		]
+	},
+	"export function":{
+		"prefix":"exf",
+		"body":[
+			"export function $1($2){",
+				"\t$3",
+				"}"
+		]
+	},
+	"templateLiteral":{
+		"prefix":"tl",
+		"body":[
+			"`${$1}$2`"
+		]
+	},
+	"usestateSnippet":{
+		"prefix":"ue_",
+		"body":[
+			"const [${1:state}, set${2:State}] = useState(${3:initValue})"
+		],
+		"luasnip":{
+			"autotrigger":true
+		}
+	},
+	"useEffect": {
+		"prefix": "uf_",
+		"body": [
+			"useEffect(() => {",
+				"  ${1:setup}",
+				"",
+				"}, [${2:dependencies?}])",
+				""
+		],
+		"luasnip":{
+			"autotrigger":true
+		}
+	},
+	"const": {
+		"prefix": "co",
+		"body": [
+			"const ${1:name} = ${2:value}"
+		]
+	},
+	"fetch":{
+		"prefix":"fetch",
+		"body":[
+			"const ${1:response} = await fetch(\"${2:url}\", {",
+			"\tmethod:\"${3:POST}\",",
+			"\tbody: JSON.stringify($4)",
+			"})"
+		]
+	}
+}

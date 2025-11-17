@@ -1,0 +1,8 @@
+{
+  "keymap":{
+    "prefix":"vimap",
+    "body":[
+      "vim.keymap.set(\"${1:mode}\", \"${2:bind}\", function() $3 end, ${4:opts})"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "inline math block":{
+    "prefix":"mi",
+    "body":[
+      "$$1$"
+    ]
+  }
+}

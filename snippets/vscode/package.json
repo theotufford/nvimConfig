@@ -1,0 +1,61 @@
+{
+	"name": "example-snippets",
+	"contributes": {
+		"snippets": [
+			{
+				"language": [
+					"all"
+				],
+				"path": "./snippets/all.json"
+			},
+			{
+        "language": [
+          "html",
+          "javascriptreact",
+          "htmldjango",
+          "astro",
+          "blade"
+        ],
+        "path": "./snippets/html.json"
+      },
+      {
+				"language": [
+					"javascript",
+          "javascriptreact"
+				],
+				"path": "./snippets/javascript.json"
+			},
+      {
+				"language": [
+					"json"
+				],
+				"path": "./snippets/json.json"
+			},
+      {
+				"language": [
+					"css"
+				],
+				"path": "./snippets/css.json"
+			}, 
+      {
+				"language": [
+					"lua"
+				],
+				"path": "./snippets/lua.json"
+			},
+      {
+        "language": [
+          "markdown"
+        ],
+        "path": "./snippets/markdown.json"
+      },
+      {
+        "language": [
+          "python"
+        ],
+        "path": "./snippets/python.json"
+      }
+
+		]
+	}
+}

@@ -1,0 +1,11 @@
+{
+		"dqEsc": {
+				"prefix": "dqesc",
+				"body": [
+						"\\\"$1\\\""
+				],
+				"luasnip":{
+						"autotrigger":true
+				}
+		}
+}
