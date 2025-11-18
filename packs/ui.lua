@@ -9,6 +9,7 @@ function mod.add()
 end
 
 function mod.setup()
+
 	vim.cmd("colorscheme carbonfox")
 
 	require "mini.pick".setup()

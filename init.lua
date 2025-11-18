@@ -8,7 +8,7 @@
 	vim.opt.shiftwidth = 2
 	vim.opt.softtabstop = 2
 	vim.o.swapfile = false
-	vim.o.winborder = "double"
+	vim.o.winborder = "rounded"
 	vim.cmd(":hi statusline guibg=NONE")
 	local set = vim.keymap.set
 	set('n', "<leader>o", ":w<CR> :update<CR> :source<CR>")

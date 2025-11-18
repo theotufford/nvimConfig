@@ -15,10 +15,6 @@ function mod.setup()
 	require "mini.pairs".setup()
 	require "nvim-surround".setup() -- gotta make these binds better most dont work
 
-	local api = require('remote-sshfs.api')
-	vim.keymap.set('n', '<leader>rc', api.connect, {})
-	vim.keymap.set('n', '<leader>rd', api.disconnect, {})
-	vim.keymap.set('n', '<leader>re', api.edit, {})
 	local ls = require("luasnip")
 	ls.setup({ enable_autosnippets = true })
 	require("luasnip.loaders.from_vscode").load({ paths = { "/usr/local/snippets/vscode" } })
@@ -47,5 +43,9 @@ function mod.setup()
 			},
 		}
 	})
+	local api = require('remote-sshfs.api')
+	vim.keymap.set('n', '<leader>rc', api.connect, {})
+	vim.keymap.set('n', '<leader>rd', api.disconnect, {})
+	vim.keymap.set('n', '<leader>re', api.edit, {})
 end
 return mod
