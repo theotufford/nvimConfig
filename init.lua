@@ -14,10 +14,8 @@
 	set('n', "<leader>o", ":w<CR> :update<CR> :source<CR>")
 	set('n', "<leader>w", ":w<CR>")
 	set('n', "<leader>q", ":q<CR>")
-
 local homeDir = os.getenv("HOME")
 package.path = package.path .. ";".. homeDir .."/.config/nvim/packs/?.lua"
-
 local packList = { -- order in which packages are added and then loaded
 	"ui",
 	"langSupport",
