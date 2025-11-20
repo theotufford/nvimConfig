@@ -18,8 +18,8 @@ local homeDir = os.getenv("HOME")
 package.path = package.path .. ";".. homeDir .."/.config/nvim/packs/?.lua"
 local packList = { -- order in which packages are added and then loaded
 	"ui",
+	"textEditing",
 	"langSupport",
-	"textEditing"
 }
 
 -- add packages

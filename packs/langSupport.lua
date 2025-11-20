@@ -3,74 +3,131 @@ function pack.add()
 	local packList = {
 		"neovim/nvim-lspconfig",
 		"mason-org/mason.nvim",
-		"neovim/nvim-lspconfig" ,
+		"neovim/nvim-lspconfig",
 		"mason-org/mason-lspconfig.nvim",
 		"nvim-lua/plenary.nvim",
-	  "R-nvim/R.nvim",
+		"R-nvim/R.nvim",
 	}
 	for _, packName in ipairs(packList) do
-		vim.pack.add({{src = "https://github.com/" .. packName}})
+		vim.pack.add({ { src = "https://github.com/" .. packName } })
 	end
-	vim.pack.add({{
+	vim.pack.add({ {
 		src = "https://github.com/nvim-treesitter/nvim-treesitter",
 		branch = 'master',
-		build = ":TSUpdate" }})
+		build = ":TSUpdate"
+	} })
 end
 
 function pack.setup()
 	require "nvim-treesitter".setup()
 	require "mason".setup()
-	require "mason-lspconfig".setup()
 	require "r".setup()
-	-- lsp config
-	local lspLangList = {
-		'lua_ls',
-		'python',
-		'typst',
-		'r',
-		'rnoweb',
-		'clangd',
-		'vscode-eslint-language-server',
-		"ast-grep"
-	}
-
-	vim.lsp.enable(lspLangList)
-	vim.api.nvim_create_autocmd('LspAttach',
-		{
-			callback = function(ev)
-				local client = vim.lsp.get_client_by_id(ev.data.client_id)
-				if client:supports_method('textDocument/completion') then
-					vim.lsp.completion.enable(true, client.id, ev.buf)
-				end
-			end,
-		})
-
-		-- treesitter config
-		local tsLangList = {
-			"c",
-			"javascript",
-			"lua",
-			"vim",
-			"vimdoc",
-			"query",
-			"markdown",
-			"markdown_inline",
-			"python"
+	require("mason-lspconfig").setup({
+		ensure_installed = {
+			"lua_ls",
+			"pyright",
+			"r_language_server",
+			"ts_ls",
+			"html",
+			"cssls",
+			"clangd",
 		}
+	})
+	-- LSP settings ---------------------------------------------------------
+	local lspconfig = require("lspconfig")
+	-- Common on_attach
+	local onAttach = function(_, bufnr)
+		local opts = { buffer = bufnr, silent = true }
+		vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+	end
 
-	require 'nvim-treesitter.configs'.setup {
-		ensure_installed = tsLangList,
-		auto_install = true,
-		highlight = {
-			enable = true,
-			additional_vim_regex_highlighting = false,
-		},
-	}
+	-- Lua (for Neovim)
+	lspconfig.lua_ls.setup({
+		on_attach = onAttach,
+		settings = {
+			Lua = {
+				diagnostics = { globals = { "vim" } },
+				workspace = { checkThirdParty = false },
+			},
+		}
+	})
 
-	-- mappings
+	-- Python
+	lspconfig.pyright.setup({
+		on_attach = onAttach,
+	})
 
-	vim.keymap.set('n', "<leader>lf", vim.lsp.buf.format)
+	-- R, broken for some reason 
+--	lspconfig.r_language_server.setup({
+--		on_attach = onAttach,
+--	})
 
+	-- JavaScript / React / TypeScript
+	lspconfig.ts_ls.setup({
+		on_attach = onAttach,
+	})
+
+	-- HTML
+	lspconfig.html.setup({
+		on_attach = onAttach,
+	})
+
+	-- CSS
+	lspconfig.cssls.setup({
+		on_attach = onAttach,
+	})
+
+	-- C / C++ (Pi-Pico)
+	lspconfig.clangd.setup({
+		on_attach = onAttach,
+		cmd = { "clangd", "--background-index" },
+	})
+-- treesitter settings ---------------------------------------------------------
+require("nvim-treesitter.configs").setup({
+    auto_install = true,
+    ensure_installed = {
+        "lua",
+        "python",
+        "r",
+        "javascript",
+        "tsx",
+        "html",
+        "css",
+        "c",
+        "cpp",
+        "bash",
+        "json",
+    },
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+    indent = {
+        enable = true,
+    },
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "<CR>",     -- start selection
+            node_incremental = "<CR>",   -- grow
+            node_decremental = "<BS>",   -- shrink
+        },
+    },
+    textobjects = {
+        select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                ["ic"] = "@class.inner",
+            },
+        },
+    },
+})
+vim.keymap.set('n', "<leader>lf", vim.lsp.buf.format)
 end
-
 return pack
