@@ -20,6 +20,7 @@ local packList = { -- order in which packages are added and then loaded
 	"ui",
 	"textEditing",
 	"langSupport",
+	"otherBinds",
 }
 
 -- add packages

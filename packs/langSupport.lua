@@ -25,9 +25,9 @@ function pack.setup()
 	require("mason-lspconfig").setup({
 		ensure_installed = {
 			"lua_ls",
+			"vale_ls",
 			"pyright",
-			"r_language_server",
-			"ts_ls",
+			"eslint",
 			"html",
 			"cssls",
 			"clangd",
@@ -59,16 +59,18 @@ function pack.setup()
 		on_attach = onAttach,
 	})
 
-	-- R, broken for some reason 
---	lspconfig.r_language_server.setup({
---		on_attach = onAttach,
---	})
+	-- R, broken for some reason
+	--	lspconfig.r_language_server.setup({
+	--		on_attach = onAttach,
+	--	})
 
 	-- JavaScript / React / TypeScript
-	lspconfig.ts_ls.setup({
+	lspconfig.eslint.setup({
 		on_attach = onAttach,
 	})
-
+	lspconfig.vale_ls.setup({
+		on_attach = onAttach,
+	})
 	-- HTML
 	lspconfig.html.setup({
 		on_attach = onAttach,
@@ -84,50 +86,52 @@ function pack.setup()
 		on_attach = onAttach,
 		cmd = { "clangd", "--background-index" },
 	})
--- treesitter settings ---------------------------------------------------------
-require("nvim-treesitter.configs").setup({
-    auto_install = true,
-    ensure_installed = {
-        "lua",
-        "python",
-        "r",
-        "javascript",
-        "tsx",
-        "html",
-        "css",
-        "c",
-        "cpp",
-        "bash",
-        "json",
-    },
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-    },
-    indent = {
-        enable = true,
-    },
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<CR>",     -- start selection
-            node_incremental = "<CR>",   -- grow
-            node_decremental = "<BS>",   -- shrink
-        },
-    },
-    textobjects = {
-        select = {
-            enable = true,
-            lookahead = true,
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-            },
-        },
-    },
-})
-vim.keymap.set('n', "<leader>lf", vim.lsp.buf.format)
+	-- treesitter settings ---------------------------------------------------------
+	require("nvim-treesitter.configs").setup({
+		auto_install = true,
+		ensure_installed = {
+			"lua",
+			"markdown",
+			"python",
+			"r",
+			"javascript",
+			"tsx",
+			"html",
+			"css",
+			"c",
+			"cpp",
+			"bash",
+			"json",
+		},
+		highlight = {
+			enable = true,
+			additional_vim_regex_highlighting = false,
+		},
+		indent = {
+			enable = true,
+		},
+		incremental_selection = {
+			enable = true,
+			keymaps = {
+				init_selection = "<CR>", -- start selection
+				node_incremental = "<CR>", -- grow
+				node_decremental = "<BS>", -- shrink
+			},
+		},
+		textobjects = {
+			select = {
+				enable = true,
+				lookahead = true,
+				keymaps = {
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					["ic"] = "@class.inner",
+				},
+			},
+		},
+	})
+	vim.keymap.set('n', "<leader>lf", vim.lsp.buf.format)
 end
+
 return pack
