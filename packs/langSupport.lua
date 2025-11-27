@@ -25,6 +25,7 @@ function pack.setup()
 	require("mason-lspconfig").setup({
 		ensure_installed = {
 			"lua_ls",
+			"svelte",
 			"vale_ls",
 			"pyright",
 			"eslint",
@@ -71,6 +72,10 @@ function pack.setup()
 	lspconfig.vale_ls.setup({
 		on_attach = onAttach,
 	})
+	lspconfig.svelte.setup({
+		on_attach = onAttach,
+	})
+
 	-- HTML
 	lspconfig.html.setup({
 		on_attach = onAttach,
@@ -102,6 +107,7 @@ function pack.setup()
 			"cpp",
 			"bash",
 			"json",
+			"svelte",
 		},
 		highlight = {
 			enable = true,

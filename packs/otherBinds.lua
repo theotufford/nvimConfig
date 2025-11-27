@@ -5,7 +5,6 @@ function pack.add()
 end
 
 function pack.setup()
-	-- nothin
 end
 
 

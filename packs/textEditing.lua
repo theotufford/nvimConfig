@@ -14,16 +14,14 @@ function mod.setup()
 	require "remote-sshfs".setup()
 	require "mini.pairs".setup()
 	require "nvim-surround".setup() -- gotta make these binds better most dont work
-
 	local ls = require("luasnip")
 	ls.setup({ enable_autosnippets = true })
-	local homeDir = os.getenv('HOME')
-	require("luasnip.loaders.from_vscode").load({ paths = { homeDir .. "/.config/nvim/snippets/vscode" } })
-	vim.keymap.set({ "i" }, "<C-e>", function() ls.expand() end, { silent = true })
-	vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
-	vim.keymap.set({ "i", "s" }, "<C-k>", function() ls.jump(-1) end, { silent = true })
-
-	require "blink.cmp".setup({
+	local homedir = os.getenv('HOME')
+	require("luasnip.loaders.from_vscode").load({ paths = { homedir .. "/.config/nvim/snippets/vscode" } })
+	vim.keymap.set({ "i" }, "<CR>", function() ls.expand() end, { silent = true })
+	vim.keymap.set({ "i", "s" }, "<right>", function() ls.jump(1) end, { silent = true })
+	vim.keymap.set({ "i", "s" }, "<left>", function() ls.jump(-1) end, { silent = true })
+require("blink.cmp").setup({
 		snippets = { preset = 'luasnip' },
 		-- ensure you have the `snippets` source (enabled by default)
 		sources = {
@@ -31,17 +29,13 @@ function mod.setup()
 		},
 		fuzzy = { implementation = "lua" },
 		keymap = {
-			['<C-k>'] = { 'select_prev', 'fallback' },
-			['<C-j>'] = { 'select_next', 'fallback' },
-			['<C-e>'] = {
-				function(cmp)
-					if cmp.snippet_active() then
-						return cmp.accept()
-					else
-						return cmp.select_and_accept()
-					end
-				end,
-			},
+			['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+			['<C-e>'] = { 'hide', 'fallback' },
+			['<CR>'] = { 'accept', function() return '\n' end },
+			['<Tab>'] = { 'snippet_forward', 'fallback' },
+			['<S-Tab>'] = { 'snippet_backward', 'fallback' },
+			['<Up>'] = { 'select_prev', 'fallback' },
+			['<Down>'] = { 'select_next', 'fallback' },
 		}
 	})
 	local api = require('remote-sshfs.api')
@@ -49,4 +43,5 @@ function mod.setup()
 	vim.keymap.set('n', '<leader>rd', api.disconnect, {})
 	vim.keymap.set('n', '<leader>re', api.edit, {})
 end
+
 return mod
